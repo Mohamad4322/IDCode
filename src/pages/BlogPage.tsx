@@ -15,13 +15,12 @@ const BlogPage = () => {
   const containerRef = useRef(null);
   const regularContainerRef = useRef(null);
 
-  // Combine blog posts and case studies
+  // Combine blog posts and case studies - all are now featured
   const allPosts = [
     ...blogPosts.map(post => ({
       ...post,
       type: 'blog',
-      readTime: `${Math.ceil(post.content.length / 2000)} min read`,
-      featured: post.id === 'ai-in-healthcare' || post.id === 'cloud-migration-strategies'
+      readTime: `${Math.ceil(post.content.length / 2000)} min read`
     })),
     ...caseStudies.map(study => ({
       ...study,
@@ -29,8 +28,7 @@ const BlogPage = () => {
       excerpt: study.challenge.substring(0, 150) + '...',
       category: 'Case Studies',
       date: 'June 2024',
-      readTime: '10 min read',
-      featured: study.id === 'healthcare-patient-portal' || study.id === 'fintech-digital-transformation'
+      readTime: '10 min read'
     }))
   ];
 
@@ -63,7 +61,7 @@ const BlogPage = () => {
     return () => window.removeEventListener('resize', measureWidth);
   }, []);
 
-  // Filter posts based on active category and search query
+  // Filter posts based on active category and search query - all posts are now featured
   const filteredPosts = allPosts.filter(post => {
     const matchesCategory = activeCategory === 'All' || post.category === activeCategory;
     const matchesSearch = searchQuery === '' || 
@@ -74,36 +72,7 @@ const BlogPage = () => {
     return matchesCategory && matchesSearch;
   });
 
-  // Separate featured posts
-  const featuredPosts = filteredPosts.filter(post => post.featured);
-  const regularPosts = filteredPosts.filter(post => !post.featured);
-
-  const cardWidth = isMobile ? containerWidth - 32 : 384;
-  const cardGap = 24;
-  const maxIndex = Math.max(0, featuredPosts.length - (isMobile ? 1 : 2));
-  const regularMaxIndex = Math.max(0, regularPosts.length - (isMobile ? 1 : 3));
-
-  const goToPrevious = () => {
-    setCurrentSlide(prev => Math.max(0, prev - 1));
-  };
-
-  const goToNext = () => {
-    setCurrentSlide(prev => Math.min(maxIndex, prev + 1));
-  };
-
-  const goToPreviousRegular = () => {
-    setCurrentRegularSlide(prev => Math.max(0, prev - 1));
-  };
-
-  const goToNextRegular = () => {
-    setCurrentRegularSlide(prev => Math.min(regularMaxIndex, prev + 1));
-  };
-
-  const isAtStart = currentSlide === 0;
-  const isAtEnd = currentSlide >= maxIndex;
-  
-  const isRegularAtStart = currentRegularSlide === 0;
-  const isRegularAtEnd = currentRegularSlide >= regularMaxIndex;
+  // No carousel logic needed - showing all cards in grid
 
   return (
     <div className="pt-20 overflow-x-hidden">
@@ -157,7 +126,8 @@ const BlogPage = () => {
               the digital transformation landscape with confidence.
             </p>
 
-            {/* Search Bar */}
+            {/* Search Bar - Commented out as requested */}
+            {/* 
             <div className="relative max-w-xl">
               <input
                 type="text"
@@ -173,6 +143,7 @@ const BlogPage = () => {
               />
               <Search className="absolute right-5 top-1/2 transform -translate-y-1/2 h-5 w-5" style={{ color: '#94D3A2' }} />
             </div>
+            */}
           </motion.div>
         </div>
       </section>
@@ -221,251 +192,32 @@ const BlogPage = () => {
         </div>
       </section>
 
-      {/* Featured Articles Carousel */}
-      {featuredPosts.length > 0 && (
-        <section className="relative overflow-hidden py-24" style={{ backgroundColor: '#0a0e0a' }}>
-          {/* Background Image */}
-          <img 
-            alt=""
-            loading="lazy"
-            width="1560"
-            height="1514"
-            decoding="async"
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ opacity: 0.15, color: 'transparent' }}
-            src="/AIAgents-bg.webp"
-          />
-
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Header */}
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-4">
-              <div>
-                <div className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium mb-4"
-                  style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
-                  <Star className="h-4 w-4 mr-2" />
-                  Featured Content
-                </div>
-                <h2 className="text-4xl font-bold mb-2" style={{ color: '#E3FFEF' }}>
-                  Featured Articles & Case Studies
-                </h2>
-                <p className="text-lg" style={{ color: '#94D3A2', opacity: 0.8 }}>
-                  Our most impactful insights and success stories
-                </p>
-              </div>
-              <div className="flex gap-4">
-                <button
-                  disabled={true}
-                  className="w-10 h-10 border rounded-full flex items-center justify-center transition-all"
-                  style={{ 
-                    borderColor: 'rgba(227, 255, 239, 0.3)',
-                    backgroundColor: 'transparent',
-                    cursor: 'not-allowed'
-                  }}
-                >
-                  <ChevronLeft className="w-5 h-5" style={{ 
-                    color: 'rgba(227, 255, 239, 0.3)'
-                  }} />
-                </button>
-                <button
-                  disabled={true}
-                  className="w-10 h-10 border rounded-full flex items-center justify-center transition-all"
-                  style={{ 
-                    borderColor: 'rgba(227, 255, 239, 0.3)',
-                    backgroundColor: 'transparent',
-                    cursor: 'not-allowed'
-                  }}
-                >
-                  <ChevronRight className="w-5 h-5" style={{ 
-                    color: 'rgba(227, 255, 239, 0.3)'
-                  }} />
-                </button>
-              </div>
-            </div>
-
-            {/* Featured Carousel */}
-            <div ref={containerRef} className="relative overflow-hidden">
-              <motion.div
-                className="flex"
-                animate={{ 
-                  x: -currentSlide * (cardWidth + cardGap)
-                }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                style={{ gap: `${cardGap}px` }}
-              >
-                {featuredPosts.map((post, idx) => (
-                  <motion.div
-                    key={post.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: idx * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex-shrink-0"
-                    style={{ width: `${cardWidth}px` }}
-                  >
-                    <Link to={post.path} className="block h-full">
-                      <div
-                        className="rounded-2xl overflow-hidden shadow-lg flex flex-col h-full transition-all duration-300 group"
-                        style={{ 
-                          backgroundColor: 'rgba(227, 255, 239, 0.05)',
-                          border: '1px solid rgba(227, 255, 239, 0.1)',
-                          minHeight: '500px'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor = 'rgba(227, 255, 239, 0.08)';
-                          e.currentTarget.style.borderColor = 'rgba(227, 255, 239, 0.2)';
-                          e.currentTarget.style.transform = 'translateY(-4px)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.backgroundColor = 'rgba(227, 255, 239, 0.05)';
-                          e.currentTarget.style.borderColor = 'rgba(227, 255, 239, 0.1)';
-                          e.currentTarget.style.transform = 'translateY(0)';
-                        }}
-                      >
-                        <div className="relative h-64 overflow-hidden">
-                          <img 
-                            src={post.image} 
-                            alt={post.title} 
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          />
-                          <div className="absolute top-4 left-4">
-                            <span 
-                              className="px-3 py-1 rounded-full text-xs font-medium"
-                              style={{ 
-                                backgroundColor: post.type === 'case-study' ? 'rgba(34, 197, 94, 0.9)' : 'rgba(16, 185, 129, 0.9)',
-                                color: '#FFFFFF'
-                              }}
-                            >
-                              {post.type === 'case-study' ? 'Case Study' : 'Article'}
-                            </span>
-                          </div>
-                          <div className="absolute top-4 right-4">
-                            <div className="flex items-center text-xs" style={{ color: '#FFFFFF' }}>
-                              <Clock className="h-3 w-3 mr-1" />
-                              {post.readTime}
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className="p-6 flex flex-col flex-grow">
-                          <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-medium" style={{ color: '#7DD3C0' }}>
-                              {post.category}
-                            </span>
-                            <div className="flex items-center text-sm" style={{ color: '#94D3A2', opacity: 0.8 }}>
-                              <Calendar className="h-3 w-3 mr-1" />
-                              {post.date}
-                            </div>
-                          </div>
-                          
-                          <h3 className="text-xl font-bold mb-3 flex-grow" style={{ color: '#E3FFEF' }}>
-                            {post.title}
-                          </h3>
-                          
-                          <p className="text-sm mb-4 flex-grow" style={{ color: '#94D3A2', opacity: 0.8 }}>
-                            {post.excerpt}
-                          </p>
-                          
-                          <div className="flex items-center justify-between mt-auto pt-4" style={{ borderTop: '1px solid rgba(227, 255, 239, 0.1)' }}>
-                            <div className="flex items-center text-sm" style={{ color: '#94D3A2', opacity: 0.8 }}>
-                              <User className="h-4 w-4 mr-1" />
-                              {post.author}
-                            </div>
-                            
-                            <div className="flex items-center font-medium transition-colors group" style={{ color: '#7DD3C0' }}>
-                              Read more
-                              <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-
-            {/* Mobile dots indicator */}
-            {isMobile && (
-              <div className="flex justify-center mt-8 space-x-2">
-                {featuredPosts.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}
-                    className="h-2 rounded-full transition-all"
-                    style={{
-                      width: index === currentSlide ? '24px' : '8px',
-                      backgroundColor: index === currentSlide ? '#E3FFEF' : 'rgba(227, 255, 239, 0.3)'
-                    }}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* All Articles Grid */}
+      {/* Featured Articles & Case Studies - All Cards Grid */}
       <section className="py-24" style={{ backgroundColor: '#E8F5E9' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-4">
-            <div>
+          <div className="mb-12">
+            <div className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium mb-4"
+              style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
+              <Star className="h-4 w-4 mr-2" />
+              Featured Content
+            </div>
             <h2 className="text-4xl font-bold mb-2" style={{ color: '#01051B' }}>
-              {searchQuery ? 'Search Results' : 'Latest Articles'}
+              Featured Articles & Case Studies
             </h2>
             <p className="text-lg" style={{ color: 'rgba(1, 5, 27, 0.7)' }}>
-              Dive deeper into our comprehensive collection of insights and case studies
+              Our comprehensive collection of insights, success stories, and industry expertise
             </p>
-            </div>
-            <div className="flex gap-4">
-              <button
-                disabled={true}
-                className="w-10 h-10 border rounded-full flex items-center justify-center transition-all"
-                style={{ 
-                  borderColor: 'rgba(1, 5, 27, 0.2)',
-                  backgroundColor: 'transparent',
-                  cursor: 'not-allowed'
-                }}
-              >
-                <ChevronLeft className="w-5 h-5" style={{ 
-                  color: 'rgba(1, 5, 27, 0.3)'
-                }} />
-              </button>
-              <button
-                disabled={true}
-                className="w-10 h-10 border rounded-full flex items-center justify-center transition-all"
-                style={{ 
-                  borderColor: 'rgba(1, 5, 27, 0.2)',
-                  backgroundColor: 'transparent',
-                  cursor: 'not-allowed'
-                }}
-              >
-                <ChevronRight className="w-5 h-5" style={{ 
-                  color: 'rgba(1, 5, 27, 0.3)'
-                }} />
-              </button>
-            </div>
           </div>
 
-          {regularPosts.length > 0 ? (
-            <div ref={regularContainerRef} className="relative overflow-hidden">
-              <motion.div
-                className="flex"
-                animate={{ 
-                  x: -currentRegularSlide * (cardWidth + cardGap)
-                }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                style={{ gap: `${cardGap}px` }}
-              >
-                {regularPosts.map((post, index) => (
+          {filteredPosts.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredPosts.map((post, index) => (
                 <motion.div
                   key={post.id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="flex-shrink-0"
-                  style={{ width: `${cardWidth}px` }}
                 >
                   <Link to={post.path} className="block h-full">
                     <div 
@@ -543,8 +295,7 @@ const BlogPage = () => {
                     </div>
                   </Link>
                 </motion.div>
-                ))}
-              </motion.div>
+              ))}
             </div>
           ) : (
             <div className="text-center py-16">
@@ -578,24 +329,6 @@ const BlogPage = () => {
                 Clear filters
                 <ArrowRight className="ml-2 h-4 w-4" />
               </button>
-            </div>
-          )}
-          
-          {/* Mobile navigation dots for regular posts */}
-          {isMobile && regularPosts.length > 0 && (
-            <div className="flex justify-center mt-8 space-x-2">
-              {Array.from({ length: Math.min(regularPosts.length, regularMaxIndex + 1) }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentRegularSlide(index)}
-                  className="h-2 rounded-full transition-all"
-                  style={{
-                    width: index === currentRegularSlide ? '24px' : '8px',
-                    backgroundColor: index === currentRegularSlide ? '#01051B' : 'rgba(1, 5, 27, 0.2)'
-                  }}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
             </div>
           )}
         </div>
