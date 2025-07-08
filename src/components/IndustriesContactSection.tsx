@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Building2, ChevronLeft, ChevronRight, Award, Star, Globe, Clock, Users, ArrowRight, Zap, Heart, Shield, ShoppingCart, Factory, GraduationCap, Truck, Car, Film, Wheat, Building, Hotel, Stethoscope, DollarSign, CheckCircle } from 'lucide-react';
 
 const IndustriesContactSection = () => {
@@ -399,8 +400,9 @@ const IndustriesContactSection = () => {
                 style={{ ...slideTransform, gap: `${cardGap}px` }}
               >
                 {industries.map((industry, index) => (
-                  <div
+                  <Link
                     key={`${industry.name}-${index}`}
+                    to={industry.path}
                     className="block flex-shrink-0 relative group rounded-2xl overflow-hidden transition-transform hover:-translate-y-1 cursor-pointer"
                     style={{ 
                       width: `${cardWidth}px`,
@@ -436,7 +438,7 @@ const IndustriesContactSection = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
