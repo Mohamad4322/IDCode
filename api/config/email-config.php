@@ -24,7 +24,9 @@ define('ALLOWED_ORIGINS', [
     'http://localhost:3000',
     'http://localhost:5173',
     'https://idcode-soft.com',
-    'https://www.idcode-soft.com'
+    'https://www.idcode-soft.com',
+    'http://idcode-soft.com',
+    'http://www.idcode-soft.com'
 ]);
 
 // Spam Detection Keywords
