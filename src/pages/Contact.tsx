@@ -16,15 +16,15 @@ const Contact = () => {
   const [submitError, setSubmitError] = useState('');
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value, type, checked } = e.target as HTMLInputElement;
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError('');
@@ -60,8 +60,8 @@ const Contact = () => {
         return;
       }
       
-      // Production submission
-      const response = await fetch('https://formsubmit.co/ajax/mohamadrj@idcode-soft.com', {
+      // Production submission to secure PHP handler
+      const response = await fetch('/api/contact-handler.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,15 +75,13 @@ const Contact = () => {
           service: formData.serviceInterest,
           message: formData.message,
           newsletter: formData.newsletter,
-          _subject: `New Contact Form Submission from ${formData.fullName}`,
-          _template: 'table',
-          _captcha: 'false' // Disable captcha for better UX
+          source: 'Contact Page'
         })
       });
 
       const data = await response.json();
       
-      if (data.success || response.ok) {
+      if (data.success) {
         setSubmitSuccess(true);
         setFormData({
           fullName: '',
@@ -106,10 +104,13 @@ const Contact = () => {
       console.error('Error submitting form:', error);
       
       // More specific error messages
-      if (error.message.includes('Failed to fetch')) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      if (errorMessage.includes('Failed to fetch')) {
         setSubmitError('Network error. Please check your connection and try again.');
+      } else if (errorMessage.includes('Too many submissions')) {
+        setSubmitError('Too many submissions. Please wait a few minutes before trying again.');
       } else {
-        setSubmitError('There was an error submitting your message. Please try again or contact us directly at mohamadrj@idcode-soft.com');
+        setSubmitError(errorMessage || 'There was an error submitting your message. Please try again or contact us directly at mohamadrj@idcode-soft.com');
       }
     } finally {
       setIsSubmitting(false);

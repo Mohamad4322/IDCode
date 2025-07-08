@@ -5,7 +5,7 @@ const IndustriesContactSection = () => {
   const [currentIndustrySlide, setCurrentIndustrySlide] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const cardContainerRef = useRef(null);
+  const cardContainerRef = useRef<HTMLDivElement>(null);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -21,15 +21,15 @@ const IndustriesContactSection = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
   
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value, type, checked } = e.target as HTMLInputElement;
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
   };
   
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError('');
@@ -65,8 +65,8 @@ const IndustriesContactSection = () => {
         return;
       }
       
-      // Production submission
-      const response = await fetch('https://formsubmit.co/ajax/mohamadrj@idcode-soft.com', {
+      // Production submission to secure PHP handler
+      const response = await fetch('/api/contact-handler.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,15 +80,13 @@ const IndustriesContactSection = () => {
           service: formData.serviceInterest,
           message: formData.message,
           newsletter: formData.newsletter,
-          _subject: `New Industries Contact Form Submission from ${formData.name}`,
-          _template: 'table',
-          _captcha: 'false' // Disable captcha for better UX
+          source: 'Industries Contact Section'
         })
       });
 
       const data = await response.json();
       
-      if (data.success || response.ok) {
+      if (data.success) {
         setSubmitSuccess(true);
         setFormData({
           name: '',
@@ -111,10 +109,13 @@ const IndustriesContactSection = () => {
       console.error('Error submitting form:', error);
       
       // More specific error messages
-      if (error.message.includes('Failed to fetch')) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      if (errorMessage.includes('Failed to fetch')) {
         setSubmitError('Network error. Please check your connection and try again.');
+      } else if (errorMessage.includes('Too many submissions')) {
+        setSubmitError('Too many submissions. Please wait a few minutes before trying again.');
       } else {
-        setSubmitError('There was an error submitting your message. Please try again or contact us directly at mohamadrj@idcode-soft.com');
+        setSubmitError(errorMessage || 'There was an error submitting your message. Please try again or contact us directly at mohamadrj@idcode-soft.com');
       }
     } finally {
       setIsSubmitting(false);
@@ -284,7 +285,7 @@ const IndustriesContactSection = () => {
     }
   };
 
-  const handleDragEnd = (event, info) => {
+  const handleDragEnd = (event: any, info: any) => {
     const threshold = 50;
     if (info.offset.x > threshold) {
       prevIndustrySlide();
@@ -301,7 +302,7 @@ const IndustriesContactSection = () => {
 
   return (
     <section className="relative overflow-hidden" style={{ backgroundColor: '#0a0e0a' }}>
-      <style jsx>{`
+      <style>{`
         @keyframes loading {
           0% {
             transform: translateX(-100%);
@@ -416,8 +417,11 @@ const IndustriesContactSection = () => {
                         loading="lazy"
                         onError={(e) => {
                           // Fallback to a gradient background if image fails to load
-                          e.target.style.display = 'none';
-                          e.target.parentElement.style.background = 'linear-gradient(135deg, #10b981 0%, #34d399 100%)';
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          if (target.parentElement) {
+                            target.parentElement.style.background = 'linear-gradient(135deg, #10b981 0%, #34d399 100%)';
+                          }
                         }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />

@@ -1,0 +1,100 @@
+# Security Configuration for API Directory
+# This file protects the API directory from unauthorized access
+
+# Deny direct access to all files except the contact handler
+<Files "*">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Allow access only to the contact handler
+<Files "contact-handler.php">
+    Order Allow,Deny
+    Allow from all
+    
+    # Only allow POST and OPTIONS methods
+    <RequireAll>
+        <RequireAny>
+            Require method POST
+            Require method OPTIONS
+        </RequireAny>
+    </RequireAll>
+</Files>
+
+# Protect configuration files
+<Files "*.config.php">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Protect log files
+<Files "*.log">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+<Files "*.txt">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Security Headers
+<IfModule mod_headers.c>
+    # Prevent MIME type sniffing
+    Header always set X-Content-Type-Options "nosniff"
+    
+    # Prevent clickjacking
+    Header always set X-Frame-Options "DENY"
+    
+    # Enable XSS protection
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Strict referrer policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Content Security Policy
+    Header always set Content-Security-Policy "default-src 'none'; script-src 'none'; object-src 'none';"
+    
+    # Remove server information
+    Header always unset Server
+    Header always unset X-Powered-By
+</IfModule>
+
+# Disable directory browsing
+Options -Indexes
+
+# Disable server signature
+ServerSignature Off
+
+# Prevent access to sensitive files
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|sql|conf|config)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Rate limiting (if mod_evasive is available)
+<IfModule mod_evasive24.c>
+    DOSHashTableSize    2048
+    DOSPageCount        10
+    DOSPageInterval     1
+    DOSSiteCount        50
+    DOSSiteInterval     1
+    DOSBlockingPeriod   300
+</IfModule>
+
+# Enable compression for better performance
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE text/html
+</IfModule>
+
+# Cache control for API responses
+<IfModule mod_expires.c>
+    ExpiresActive Off
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header always set Cache-Control "no-cache, no-store, must-revalidate"
+    Header always set Pragma "no-cache"
+    Header always set Expires "0"
+</IfModule>
