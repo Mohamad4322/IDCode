@@ -441,7 +441,7 @@ const canAccessQuestion = (questionId: string) => {
   }}
 >
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-16">
+        <div className="mb-16 text-left">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6" style={{ color: '#01051B' }}>
             See how we can help you reach your goals
           </h2>

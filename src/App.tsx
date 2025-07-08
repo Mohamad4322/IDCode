@@ -51,6 +51,13 @@ import Automotive from './pages/Automotive';
 import MediaEntertainment from './pages/MediaEntertainment';
 import Agriculture from './pages/Agriculture';
 
+// Blog Post Pages
+import AIInHealthcare from './pages/blog/AIInHealthcare';
+import CloudMigrationStrategies from './pages/blog/CloudMigrationStrategies';
+import RetailEcommerceTrends from './pages/blog/RetailEcommerceTrends';
+import IDCodeExpansion from './pages/blog/IDCodeExpansion';
+import SustainableSoftware from './pages/blog/SustainableSoftware';
+
 function App() {
   return (
     <Router>
@@ -108,6 +115,13 @@ function App() {
           <Route path="/automotive" element={<Automotive />} />
           <Route path="/media-entertainment" element={<MediaEntertainment />} />
           <Route path="/agriculture" element={<Agriculture />} />
+          
+          {/* Blog Post Routes */}
+          <Route path="/blog/ai-in-healthcare" element={<AIInHealthcare />} />
+          <Route path="/blog/cloud-migration-strategies" element={<CloudMigrationStrategies />} />
+          <Route path="/blog/retail-ecommerce-trends" element={<RetailEcommerceTrends />} />
+          <Route path="/blog/id-code-expansion" element={<IDCodeExpansion />} />
+          <Route path="/blog/sustainable-software" element={<SustainableSoftware />} />
         </Routes>
         <Footer />
       </div>

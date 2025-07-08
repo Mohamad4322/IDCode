@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ArrowRight, MessageSquare, TrendingUp, Users, BookOpen } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, ArrowRight, Brain, Cloud, ShoppingCart, Building, Leaf } from 'lucide-react';
+import { blogPosts } from '../data/blogPosts';
 
 const ArticlesCarouselSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -8,40 +10,57 @@ const ArticlesCarouselSection = () => {
   const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef(null);
 
-  const articles = [
-    {
-      icon: MessageSquare,
-      title: 'The Future of AI in Recruiting',
-      description: 'Exploring how artificial intelligence is revolutionizing talent acquisition and creating better candidate experiences.',
-      path: '/blog/ai-recruiting',
-      gradient: 'from-emerald-400 to-green-300',
-      bgColor: 'rgba(52, 211, 153, 0.15)'
-    },
-    {
-      icon: TrendingUp,
-      title: 'Building High-Performance Teams',
-      description: 'Best practices for creating and maintaining teams that deliver exceptional results in modern workplaces.',
-      path: '/blog/high-performance-teams',
-      gradient: 'from-teal-400 to-emerald-300',
-      bgColor: 'rgba(45, 212, 191, 0.15)'
-    },
-    {
-      icon: Users,
-      title: 'Remote Hiring Excellence',
-      description: 'A comprehensive guide to conducting effective virtual interviews and onboarding distributed teams.',
-      path: '/blog/remote-hiring',
-      gradient: 'from-green-400 to-teal-300',
-      bgColor: 'rgba(74, 222, 128, 0.15)'
-    },
-    {
-      icon: BookOpen,
-      title: 'DEI Best Practices',
-      description: 'Creating inclusive hiring processes that attract diverse talent and build stronger organizations.',
-      path: '/blog/dei-practices',
-      gradient: 'from-lime-400 to-green-300',
-      bgColor: 'rgba(163, 230, 53, 0.15)'
+  // Map blog posts to articles with appropriate icons and styling
+  const getIconForCategory = (category: string) => {
+    switch (category.toLowerCase()) {
+      case 'technology':
+        return Brain;
+      case 'industry insights':
+        return ShoppingCart;
+      case 'company news':
+        return Building;
+      default:
+        return Leaf;
     }
-  ];
+  };
+
+  const getGradientForCategory = (category: string) => {
+    switch (category.toLowerCase()) {
+      case 'technology':
+        return 'from-emerald-400 to-green-300';
+      case 'industry insights':
+        return 'from-teal-400 to-emerald-300';
+      case 'company news':
+        return 'from-green-400 to-teal-300';
+      default:
+        return 'from-lime-400 to-green-300';
+    }
+  };
+
+  const getBgColorForCategory = (category: string) => {
+    switch (category.toLowerCase()) {
+      case 'technology':
+        return 'rgba(52, 211, 153, 0.15)';
+      case 'industry insights':
+        return 'rgba(45, 212, 191, 0.15)';
+      case 'company news':
+        return 'rgba(74, 222, 128, 0.15)';
+      default:
+        return 'rgba(163, 230, 53, 0.15)';
+    }
+  };
+
+  const articles = blogPosts.slice(0, 4).map(post => ({
+    icon: getIconForCategory(post.category),
+    title: post.title,
+    description: post.excerpt,
+    path: post.path,
+    gradient: getGradientForCategory(post.category),
+    bgColor: getBgColorForCategory(post.category),
+    category: post.category,
+    author: post.author,
+    date: post.date
+  }));
 
   useEffect(() => {
     const checkMobile = () => {
@@ -179,8 +198,8 @@ const ArticlesCarouselSection = () => {
                   <p className="text-sm flex-grow mb-6" style={{ color: 'rgba(1, 5, 27, 0.6)' }}>
                     {article.description}
                   </p>
-                  <a
-                    href={article.path}
+                  <Link
+                    to={article.path}
                     className="inline-flex items-center font-medium transition-colors group"
                     style={{ color: '#10b981' }}
                     onMouseEnter={(e) => e.currentTarget.style.color = '#0d9763'}
@@ -188,7 +207,7 @@ const ArticlesCarouselSection = () => {
                   >
                     Read more
                     <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </a>
+                  </Link>
                 </div>
               </motion.div>
             ))}
@@ -215,8 +234,8 @@ const ArticlesCarouselSection = () => {
 
         {/* View All Articles CTA */}
         <div className="text-center mt-12">
-          <a
-            href="/blog"
+          <Link
+            to="/blog"
             className="inline-flex items-center px-8 py-4 rounded-xl font-medium transition-all shadow-md"
             style={{ 
               backgroundColor: '#10b981',
@@ -231,7 +250,7 @@ const ArticlesCarouselSection = () => {
           >
             View All Articles
             <ArrowRight className="ml-2 h-5 w-5" />
-          </a>
+          </Link>
         </div>
       </div>
     </section>
