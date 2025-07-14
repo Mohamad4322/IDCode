@@ -327,18 +327,45 @@ const IndustriesContactSection = () => {
       `}</style>
       
       {/* Background pattern */}
-      <img 
-        alt=""
-        loading="lazy"
-        width="1560"
-        height="1514"
-        decoding="async"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ opacity: 0.15, color: 'transparent' }}
-        src="/AIAgents-bg.webp"
-      />
+      jsx{/* Bottom-left image */}
 
-      <div className="relative z-10">
+
+{/* Top image */}
+<img 
+  alt=""
+  loading="lazy"
+  width="1560"
+  height="1514"
+  decoding="async"
+  className="absolute w-full h-full object-cover"
+  style={{ 
+    opacity: 0.15, 
+    color: 'transparent',
+    top: '-20%',
+    left: '-10%',
+    transform: 'scale(1.3) rotate(+90deg) scaleX(-1)'  // Added scaleX(-1) to flip horizontally
+  }}
+  src="/AIAgents-bg.webp"
+/>
+
+<div className="relative z-10"></div>
+      <img 
+  alt=""
+  loading="lazy"
+  width="1560"
+  height="1514"
+  decoding="async"
+  className="absolute w-full h-full object-cover"
+  style={{ 
+    opacity: 0.15, 
+    color: 'transparent',
+    bottom: '+1%',
+    left: '-7%',
+    transform: 'scale(1.4) rotate( +9deg)'  // Scale 30% bigger and rotate 5 degrees counter-clockwise
+  }}
+  src="/AIAgents-bg.webp"
+/>
+<div className="relative z-10">
         {/* Industries Section */}
         <div className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

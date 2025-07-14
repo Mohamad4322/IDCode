@@ -449,7 +449,7 @@ const Home = () => {
       <ArticlesCarouselSection />
 
       {/* Experience Our Expertise Section */}
-      <section className="relative overflow-hidden pt-24 pb-0 min-h-screen" style={{ backgroundColor: '#E8F5E9' }}>
+      <section className="relative overflow-hidden pt-12 pb-5 min-h-screen" style={{ backgroundColor: '#E8F5E9' }}>
         {/* Wave Background */}
         <div className="absolute inset-0">
           <img 
