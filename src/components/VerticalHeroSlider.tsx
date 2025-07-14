@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowRight, Star, Award, Users, Building2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const HeroSlider = () => {
   const [openIndex, setOpenIndex] = useState(0);
-  const progressRef = useRef(null);
-  const timerRef = useRef(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const timerRef = useRef<number | null>(null);
 
   const cards = [
     {
@@ -17,9 +17,9 @@ const HeroSlider = () => {
       description: "Combining advanced technology and decades of industry insight, we design and develop bespoke full-cycle solutions tailored to deliver your unique software vision.",
       type: "overview",
       stats: [
-        { number: "200+", label: "Projects Delivered" },
-        { number: "50+", label: "Happy Clients" },
-        { number: "5+", label: "Years Experience" }
+        { number: "500+", label: "Projects Delivered" },
+        { number: "150+", label: "Happy Clients" },
+        { number: "10+", label: "Years Experience" }
       ]
     },
     {
@@ -83,7 +83,11 @@ const HeroSlider = () => {
     timerRef.current = setInterval(() => {
       setOpenIndex(prev => (prev + 1) % cards.length);
     }, 15000);
-    return () => clearInterval(timerRef.current);
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
   }, [openIndex, cards.length]);
 
   const goToPrevious = () => {
@@ -94,7 +98,7 @@ const HeroSlider = () => {
     setOpenIndex(prevIndex => (prevIndex + 1) % cards.length);
   };
 
-  const handleCardClick = (index) => {
+  const handleCardClick = (index: number) => {
     setOpenIndex(index);
   };
 
@@ -102,7 +106,7 @@ const HeroSlider = () => {
     <>
       {/* Mobile View */}
       <section className="md:hidden h-[85vh] relative overflow-hidden" style={{ backgroundColor: '#0a0e0a' }}>
-        {/* Wave background */}
+        {/* Wave background - same as desktop */}
         <div className="absolute inset-0">
           <img 
             src="/wave.webp"
@@ -132,69 +136,144 @@ const HeroSlider = () => {
                   className="h-full w-full relative"
                   style={{ backgroundImage: `url(${card.img})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
-                  <div className="relative h-full flex flex-col justify-end p-6 pb-8">
-                    <span className="text-white/80 text-sm font-medium mb-3">{card.label}</span>
-                    <h2 className="text-3xl font-serif text-white mb-4 leading-tight">{card.title}</h2>
-                    <p className="text-white/90 text-base mb-6 leading-relaxed">{card.description}</p>
-                    
-                    {card.button && (
-                      <Link 
-                        to={card.button.link}
-                        className="inline-flex items-center bg-white text-gray-900 px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors mb-6 self-start"
-                      >
-                        {card.button.text}
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    )}
-
-                    {card.stats && (
-                      <div className="grid grid-cols-3 gap-4 mb-6">
-                        {card.stats.map((stat, idx) => (
-                          <div key={idx} className="text-white">
-                            <div className="text-2xl font-bold">{stat.number}</div>
-                            <div className="text-xs text-white/70">{stat.label}</div>
-                          </div>
-                        ))}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/20" />
+                  <div className="relative h-full flex flex-col p-6 pt-8">
+                    <div className="flex-1 flex flex-col justify-center">
+                      <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium mb-4 self-start"
+                        style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
+                        <Building2 className="h-3 w-3 mr-1" />
+                        {card.label}
                       </div>
-                    )}
-                    
-                    {/* Progress Bar */}
-                    <div className="relative w-full h-1 bg-white/20 rounded-full mb-4">
-                      <div 
-                        ref={progressRef}
-                        className="absolute top-0 left-0 h-full bg-white rounded-full transition-[width]"
-                        style={{ width: '0%' }}
-                      />
+                      <h2 className="text-3xl font-bold mb-4 leading-tight" style={{ color: '#E3FFEF' }}>
+                        {card.title}
+                      </h2>
+                      <p className="text-base mb-6 leading-relaxed" style={{ color: '#94D3A2' }}>
+                        {card.description}
+                      </p>
+                      
+                      {card.button && (
+                        <Link 
+                          to={card.button.link}
+                          className="inline-flex items-center px-6 py-3 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl mb-6 self-start"
+                          style={{ 
+                            backgroundColor: '#E3FFEF',
+                            color: '#0a0e0a'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = '#D0F5E3';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = '#E3FFEF';
+                          }}
+                        >
+                          {card.button.text}
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                      )}
+
+                      {card.stats && (
+                        <div className="grid grid-cols-3 gap-4 mb-6">
+                          {card.stats.map((stat, idx) => (
+                            <div key={idx} className="text-center p-3 rounded-xl"
+                              style={{ 
+                                backgroundColor: 'rgba(227, 255, 239, 0.1)',
+                                border: '1px solid rgba(227, 255, 239, 0.2)'
+                              }}>
+                              <div className="text-2xl font-bold" style={{ color: '#10b981' }}>{stat.number}</div>
+                              <div className="text-xs" style={{ color: '#94D3A2' }}>{stat.label}</div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {card.services && (
+                        <div className="mb-6">
+                          <h3 className="text-sm font-medium mb-3" style={{ color: '#E3FFEF' }}>Our Services</h3>
+                          <div className="grid grid-cols-2 gap-2">
+                            {card.services.map((service, idx) => (
+                              <Link 
+                                key={idx}
+                                to={service.link}
+                                className="flex items-center group transition-colors text-xs p-2 rounded-lg"
+                                style={{ color: '#94D3A2' }}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.backgroundColor = 'rgba(227, 255, 239, 0.1)';
+                                  e.currentTarget.style.color = '#E3FFEF';
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.backgroundColor = 'transparent';
+                                  e.currentTarget.style.color = '#94D3A2';
+                                }}
+                              >
+                                <div className="w-1 h-1 rounded-full mr-2 transition-colors"
+                                  style={{ backgroundColor: '#10b981' }} />
+                                {service.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                     
-                    {/* Navigation */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex gap-2">
-                        {cards.map((_, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => setOpenIndex(idx)}
-                            className={`w-2 h-2 rounded-full transition-all ${
-                              idx === openIndex ? 'bg-white w-8' : 'bg-white/40'
-                            }`}
-                          />
-                        ))}
+                    {/* Progress Bar and Navigation at Bottom - same style as desktop */}
+                    <div className="mt-auto pb-2">
+                      {/* Progress Bar */}
+                      <div className="relative w-full h-1 bg-white/20 rounded-full mb-4">
+                        <div 
+                          ref={progressRef}
+                          className="absolute top-0 left-0 h-full bg-white rounded-full transition-[width]"
+                          style={{ width: '0%' }}
+                        />
                       </div>
                       
-                      <div className="flex gap-2">
-                        <button 
-                          onClick={goToPrevious}
-                          className="w-10 h-10 flex items-center justify-center bg-white/10 backdrop-blur-sm rounded-full border border-white/20"
-                        >
-                          <ChevronLeft className="h-5 w-5 text-white" />
-                        </button>
-                        <button 
-                          onClick={goToNext}
-                          className="w-10 h-10 flex items-center justify-center bg-white/10 backdrop-blur-sm rounded-full border border-white/20"
-                        >
-                          <ChevronRight className="h-5 w-5 text-white" />
-                        </button>
+                      {/* Navigation - same style as desktop */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex gap-2">
+                          {cards.map((_, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => setOpenIndex(idx)}
+                              className={`w-2 h-2 rounded-full transition-all ${
+                                idx === openIndex ? 'bg-white w-8' : 'bg-white/40'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                        
+                        <div className="flex gap-3">
+                          <button 
+                            onClick={goToPrevious}
+                            className="w-10 h-10 flex items-center justify-center rounded-full transition-all"
+                            style={{
+                              backgroundColor: 'rgba(227, 255, 239, 0.1)',
+                              border: '1px solid rgba(227, 255, 239, 0.2)'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.backgroundColor = 'rgba(227, 255, 239, 0.15)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.backgroundColor = 'rgba(227, 255, 239, 0.1)';
+                            }}
+                          >
+                            <ChevronLeft className="h-5 w-5" style={{ color: '#E3FFEF' }} />
+                          </button>
+                          <button 
+                            onClick={goToNext}
+                            className="w-10 h-10 flex items-center justify-center rounded-full transition-all"
+                            style={{
+                              backgroundColor: 'rgba(227, 255, 239, 0.1)',
+                              border: '1px solid rgba(227, 255, 239, 0.2)'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.backgroundColor = 'rgba(227, 255, 239, 0.15)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.backgroundColor = 'rgba(227, 255, 239, 0.1)';
+                            }}
+                          >
+                            <ChevronRight className="h-5 w-5" style={{ color: '#E3FFEF' }} />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -244,23 +323,26 @@ const HeroSlider = () => {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/20"
                   >
                     <div className="h-full flex flex-col justify-end p-12 pb-10">
-                      <motion.span 
+                      <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-white/80 text-sm font-medium mb-4"
+                        className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium mb-6 self-start"
+                        style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}
                       >
+                        <Building2 className="h-4 w-4 mr-2" />
                         {card.label}
-                      </motion.span>
+                      </motion.div>
                       
                       <motion.h1 
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-5xl font-serif text-white mb-6 max-w-3xl leading-tight"
+                        className="text-5xl font-bold mb-6 max-w-3xl leading-tight"
+                        style={{ color: '#E3FFEF' }}
                       >
                         {card.title}
                       </motion.h1>
@@ -269,7 +351,8 @@ const HeroSlider = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="text-lg text-white/90 mb-8 max-w-2xl leading-relaxed"
+                        className="text-lg mb-8 max-w-2xl leading-relaxed"
+                        style={{ color: '#94D3A2' }}
                       >
                         {card.description}
                       </motion.p>
@@ -283,7 +366,17 @@ const HeroSlider = () => {
                         >
                           <Link 
                             to={card.button.link}
-                            className="inline-flex items-center bg-white text-gray-900 px-8 py-4 rounded-full font-medium hover:bg-gray-100 transition-all hover:shadow-lg group"
+                            className="inline-flex items-center px-8 py-4 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl group"
+                            style={{ 
+                              backgroundColor: '#E3FFEF',
+                              color: '#0a0e0a'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.backgroundColor = '#D0F5E3';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.backgroundColor = '#E3FFEF';
+                            }}
                           >
                             {card.button.text}
                             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -296,12 +389,16 @@ const HeroSlider = () => {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.5 }}
-                          className="grid grid-cols-3 gap-8 mb-10 max-w-lg"
+                          className="grid grid-cols-3 gap-6 mb-10 max-w-lg"
                         >
                           {card.stats.map((stat, idx) => (
-                            <div key={idx} className="text-white">
-                              <div className="text-3xl font-bold mb-1">{stat.number}</div>
-                              <div className="text-sm text-white/70">{stat.label}</div>
+                            <div key={idx} className="text-center p-4 rounded-xl"
+                              style={{ 
+                                backgroundColor: 'rgba(227, 255, 239, 0.1)',
+                                border: '1px solid rgba(227, 255, 239, 0.2)'
+                              }}>
+                              <div className="text-3xl font-bold mb-1" style={{ color: '#10b981' }}>{stat.number}</div>
+                              <div className="text-sm" style={{ color: '#94D3A2' }}>{stat.label}</div>
                             </div>
                           ))}
                         </motion.div>
@@ -314,15 +411,25 @@ const HeroSlider = () => {
                           transition={{ delay: 0.5 }}
                           className="mb-10"
                         >
-                          <h3 className="text-white text-lg font-medium mb-4">Our Services</h3>
+                          <h3 className="text-lg font-medium mb-4" style={{ color: '#E3FFEF' }}>Our Services</h3>
                           <div className="grid grid-cols-2 gap-3 max-w-xl">
                             {card.services.map((service, idx) => (
                               <Link 
                                 key={idx}
                                 to={service.link}
-                                className="text-white/80 hover:text-white transition-colors text-sm flex items-center group"
+                                className="flex items-center group transition-colors text-sm p-2 rounded-lg"
+                                style={{ color: '#94D3A2' }}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.backgroundColor = 'rgba(227, 255, 239, 0.1)';
+                                  e.currentTarget.style.color = '#E3FFEF';
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.backgroundColor = 'transparent';
+                                  e.currentTarget.style.color = '#94D3A2';
+                                }}
                               >
-                                <div className="w-1.5 h-1.5 bg-white/60 rounded-full mr-2 group-hover:bg-white transition-colors" />
+                                <div className="w-1.5 h-1.5 rounded-full mr-3 transition-colors"
+                                  style={{ backgroundColor: '#10b981' }} />
                                 {service.name}
                               </Link>
                             ))}
@@ -337,40 +444,60 @@ const HeroSlider = () => {
                         transition={{ delay: 0.6 }}
                         className="mt-auto"
                       >
-                        <div className="relative w-full h-1 bg-white/20 rounded-full mb-6">
-                          <div 
-                            ref={progressRef}
-                            className="absolute top-0 left-0 h-full bg-white rounded-full"
-                            style={{ width: '0%', transition: 'width 15s linear' }}
-                          />
-                        </div>
+                        <div className="relative w-full h-1 bg-white/20 rounded-full mb-4">
+                      <div 
+                        ref={progressRef}
+                        className="absolute top-0 left-0 h-full bg-white rounded-full transition-[width]"
+                        style={{ width: '0%' }}
+                      />
+                    </div>
                         
                         {/* Navigation */}
-                        <div className="flex items-center justify-between">
-                          <div className="flex gap-3">
-                            {cards.map((_, idx) => (
-                              <button
-                                key={idx}
-                                onClick={(e) => { e.stopPropagation(); setOpenIndex(idx); }}
-                                className={`h-1 rounded-full transition-all ${
-                                  idx === openIndex ? 'bg-white w-12' : 'bg-white/40 w-6 hover:bg-white/60'
-                                }`}
-                              />
-                            ))}
-                          </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex gap-2">
+                        {cards.map((_, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => setOpenIndex(idx)}
+                            className={`w-2 h-2 rounded-full transition-all ${
+                              idx === openIndex ? 'bg-white w-8' : 'bg-white/40'
+                            }`}
+                          />
+                        ))}
+                      </div>
                           
                           <div className="flex gap-3">
                             <button 
                               onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
-                              className="w-10 h-10 flex items-center justify-center bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transition-colors"
+                              className="w-10 h-10 flex items-center justify-center rounded-full transition-all"
+                              style={{
+                                backgroundColor: 'rgba(227, 255, 239, 0.1)',
+                                border: '1px solid rgba(227, 255, 239, 0.2)'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.backgroundColor = 'rgba(227, 255, 239, 0.15)';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = 'rgba(227, 255, 239, 0.1)';
+                              }}
                             >
-                              <ChevronLeft className="h-5 w-5 text-white" />
+                              <ChevronLeft className="h-5 w-5" style={{ color: '#E3FFEF' }} />
                             </button>
                             <button 
                               onClick={(e) => { e.stopPropagation(); goToNext(); }}
-                              className="w-10 h-10 flex items-center justify-center bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transition-colors"
+                              className="w-10 h-10 flex items-center justify-center rounded-full transition-all"
+                              style={{
+                                backgroundColor: 'rgba(227, 255, 239, 0.1)',
+                                border: '1px solid rgba(227, 255, 239, 0.2)'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.backgroundColor = 'rgba(227, 255, 239, 0.15)';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = 'rgba(227, 255, 239, 0.1)';
+                              }}
                             >
-                              <ChevronRight className="h-5 w-5 text-white" />
+                              <ChevronRight className="h-5 w-5" style={{ color: '#E3FFEF' }} />
                             </button>
                           </div>
                         </div>
@@ -396,7 +523,7 @@ const HeroSlider = () => {
         })}
       </section>
 
-      <style jsx>{`
+      <style>{`
         .writing-mode-vertical {
           writing-mode: vertical-lr;
           text-orientation: mixed;

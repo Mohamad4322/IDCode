@@ -9,7 +9,7 @@ if (!defined('CONTACT_HANDLER_ACCESS')) {
 }
 
 // Email Configuration
-define('ADMIN_EMAIL', 'mohamadrj@idcode-soft.com');
+define('ADMIN_EMAIL', 'info@idcode-soft.com');
 define('FROM_EMAIL', 'noreply@idcode-soft.com');
 define('FROM_NAME', 'ID Code Contact Form');
 

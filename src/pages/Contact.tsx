@@ -110,7 +110,7 @@ const Contact = () => {
       } else if (errorMessage.includes('Too many submissions')) {
         setSubmitError('Too many submissions. Please wait a few minutes before trying again.');
       } else {
-        setSubmitError(errorMessage || 'There was an error submitting your message. Please try again or contact us directly at mohamadrj@idcode-soft.com');
+        setSubmitError(errorMessage || 'There was an error submitting your message. Please try again or contact us directly at info@idcode-soft.com');
       }
     } finally {
       setIsSubmitting(false);
@@ -130,8 +130,8 @@ const Contact = () => {
       icon: Mail,
       title: 'Email Us',
       description: 'Send us a detailed message',
-      contact: 'mohamadrj@idcode-soft.com',
-      action: 'mailto:mohamadrj@idcode-soft.com',
+      contact: 'info@idcode-soft.com',
+      action: 'mailto:info@idcode-soft.com',
       gradient: 'from-teal-500 to-emerald-400'
     },
     {
@@ -157,7 +157,7 @@ const Contact = () => {
     state: 'New Jersey',
     country: 'United States',
     phone: '+1 (732) 797-8127',
-    email: 'mohamadrj@idcode-soft.com',
+    email: 'info@idcode-soft.com',
     hours: 'Mon - Fri: 9:00 AM - 6:00 PM',
     timezone: 'EST (Eastern Standard Time)'
   };

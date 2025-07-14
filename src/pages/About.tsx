@@ -123,7 +123,7 @@ const About = () => {
     state: 'New Jersey',
     country: 'United States',
     phone: '+1 (732) 797-8127',
-    email: 'mohamadrj@idcode-soft.com',
+    email: 'info@idcode-soft.com',
     hours: 'Mon - Fri: 9:00 AM - 6:00 PM',
     timezone: 'EST (Eastern Standard Time)'
   };

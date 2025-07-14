@@ -173,7 +173,7 @@ fetch('/api/contact-handler.php', {
 ## 📞 Support
 
 For technical issues or configuration changes, contact:
-- **Email**: mohamadrj@idcode-soft.com
+- **Email**: info@idcode-soft.com
 - **Phone**: +1 (732) 797-8127
 
 ---

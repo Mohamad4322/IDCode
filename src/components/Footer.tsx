@@ -36,7 +36,7 @@ const Footer = () => {
     }
     
     // Send email using a serverless function or email service
-    fetch('https://formsubmit.co/ajax/mohamadrj@idcode-soft.com', {
+    fetch('https://formsubmit.co/ajax/info@idcode-soft.com', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -278,7 +278,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Mail className="h-4 w-4 mr-3 flex-shrink-0" style={{ color: '#10b981' }} />
-                <span style={{ color: 'rgba(1, 5, 27, 0.7)' }}>mohamadrj@idcode-soft.com</span>
+                <span style={{ color: 'rgba(1, 5, 27, 0.7)' }}>info@idcode-soft.com</span>
               </li>
               <li className="flex items-start">
                 <MapPin className="h-4 w-4 mr-3 flex-shrink-0 mt-0.5" style={{ color: '#10b981' }} />

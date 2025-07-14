@@ -325,8 +325,13 @@ const Header = () => {
                   </div>
                   {/* Green dot indicator */}
                   <span className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-emerald-600 rounded-full transition-all duration-300 ${
-                    isActiveCategory('/services') || activeDropdown === 'services' ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                  }`}></span>
+  serviceCategories.some(cat =>
+    cat.subServices.some(service => isActive(service.path))
+  ) || activeDropdown === 'services'
+    ? 'opacity-100'
+    : 'opacity-0 group-hover:opacity-100'
+}`}></span>
+
                 </Link>
                   
                   {activeDropdown === 'services' && (
@@ -424,7 +429,10 @@ const Header = () => {
                   
                   {activeDropdown === 'industries' && (
                     <div className="dropdown-menu__wrapper fixed left-0 right-0 top-full mt-0 z-50 px-4">
-                      <div className="dropdown-menu w-full max-w-[1100px] mx-auto bg-gradient-to-br from-white/80 via-emerald-50/20 to-teal-50/20 backdrop-blur-3xl rounded-2xl shadow-2xl border border-emerald-100/30 overflow-hidden">
+                      <div 
+                        className="dropdown-menu w-full max-w-[1100px] mx-auto bg-gradient-to-br from-white/80 via-emerald-50/20 to-teal-50/20 backdrop-blur-3xl rounded-2xl shadow-2xl border border-emerald-100/30 overflow-hidden"
+                        onMouseLeave={() => setActiveDropdown(null)}
+                      >
                         <div className="flex flex-col lg:flex-row min-h-[550px]">
                           {/* Left Section - Industries Grid */}
                           <div className="w-full lg:w-1/2 bg-gradient-to-br from-slate-900 via-emerald-900/50 to-slate-900 p-6 relative overflow-hidden">
@@ -569,14 +577,16 @@ const Header = () => {
 </div>
 
               </div>
-
-              {/* Search */} 
+              
+              {/* Search  
               <div className="header--new__search hidden lg:block">
                 <div className="search--new__btn search--new__icon-wrap cursor-pointer p-2 hover:bg-emerald-50 rounded-lg transition-colors" tabIndex={0}>
                   <Search className="search--new__icon h-4 w-4 text-gray-700 hover:text-emerald-600 transition-colors" />
                 </div> 
               </div>
+              */}
             </div>
+            
 
          {/* Mobile Contact Button */}
          {!isScrolled && (

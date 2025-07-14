@@ -116,7 +116,7 @@ const IndustriesContactSection = () => {
       } else if (errorMessage.includes('Too many submissions')) {
         setSubmitError('Too many submissions. Please wait a few minutes before trying again.');
       } else {
-        setSubmitError(errorMessage || 'There was an error submitting your message. Please try again or contact us directly at mohamadrj@idcode-soft.com');
+        setSubmitError(errorMessage || 'There was an error submitting your message. Please try again or contact us directly at info@idcode-soft.com');
       }
     } finally {
       setIsSubmitting(false);
@@ -341,8 +341,8 @@ const IndustriesContactSection = () => {
       <div className="relative z-10">
         {/* Industries Section */}
         <div className="py-24">
-          <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-left mb-16">
               <div className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium mb-4"
                 style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
                 <Building2 className="h-4 w-4 mr-2" />
@@ -357,7 +357,7 @@ const IndustriesContactSection = () => {
                   backgroundClip: 'text'
                 }}>tailored for every sector</span>
               </h2>
-              <p className="text-xl max-w-3xl mx-auto" style={{ color: '#94D3A2' }}>
+              <p className="text-xl max-w-3xl" style={{ color: '#94D3A2' }}>
                 We deliver specialized solutions across diverse industries, addressing unique challenges with innovative technology.
               </p>
             </div>
@@ -464,7 +464,7 @@ const IndustriesContactSection = () => {
         {/* Impact Stats Section */}
         <div className="py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
+            <div className="text-left mb-16">
               <h2 className="text-4xl lg:text-5xl font-bold" style={{ color: '#E3FFEF' }}>
                 Real impact from intake to final offer.
               </h2>
