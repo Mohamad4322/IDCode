@@ -449,7 +449,7 @@ const Home = () => {
       <ArticlesCarouselSection />
 
       {/* Experience Our Expertise Section */}
-      <section className="relative overflow-hidden pt-12 pb-5 min-h-screen" style={{ backgroundColor: '#E8F5E9' }}>
+      <section className="relative overflow-hidden py-24" style={{ backgroundColor: '#E8F5E9' }}>
         {/* Wave Background */}
         <div className="absolute inset-0">
           <img 
@@ -458,13 +458,13 @@ const Home = () => {
             className="w-full h-full object-cover"
             style={{ 
               opacity: 0.3,
-              transform: 'scale(1.1)'
+              transform: 'scale(1.05)'
             }}
           />
         </div>
 
         {/* Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="w-full lg:w-2/3 space-y-8">
             {/* Section Header */}
             <motion.div
