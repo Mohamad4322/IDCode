@@ -292,7 +292,10 @@ const Header = () => {
               <img
                 src="/logo.png"
                 alt="IDCode"
+                width={120}
+                height={40}
                 className="header--new__logo-img w-[120px] h-[40px] object-contain"
+                loading="eager"
               />
             </span>
           </Link>

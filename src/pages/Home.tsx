@@ -13,6 +13,8 @@ import CTAIntegrationsSection from '../components/CTAIntegrationsSection';
 import ArticlesCarouselSection from '../components/ArticlesCarouselSection';
 import { CardSlider } from '../components/AnimatedSlider';
 import GradientText from '../components/GradientText';
+import LazyImage from '../components/LazyImage';
+import LazyVideo from '../components/LazyVideo';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
@@ -178,10 +180,6 @@ const Home = () => {
 ];
 
   const categories = ['All Industries', 'HEALTHCARE', 'FINANCE', 'RETAIL', 'MANUFACTURING', 'EDUCATION', 'REAL ESTATE'];
-
-  const filteredIndustries = selectedCategory === 'All Industries' 
-    ? industries 
-    : industries.filter(industry => industry.category === selectedCategory);
 
   const testimonials = [
     {
@@ -461,14 +459,14 @@ const Home = () => {
           
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="rounded-xl overflow-hidden shadow-xl">
-              <video 
-                src="/cta-video-big.webm" 
-                className="w-full h-full object-cover"
-                autoPlay 
-                loop 
-                muted 
-                playsInline
-              ></video>
+              <LazyVideo
+                src="/cta-video-big.webm"
+                className="w-full h-full"
+                autoPlay={true}
+                loop={true}
+                muted={true}
+                playsInline={true}
+              />
             </div>
             
             <div className="bg-white p-8 rounded-xl shadow-lg">
