@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, ArrowRight, Star, Award, Users, Building2, Headphones, MessageSquare, Globe, CheckCircle, Send, Calendar, Zap, Shield } from 'lucide-react';
+import { AccessibleLabel, AccessibleInput, AccessibleSelect, AccessibleTextarea, AccessibleCheckbox } from '../components/AccessibleForm';
+import AccessibleButton from '../components/AccessibleButton';
 
 const Contact = () => {
   const [formData, setFormData] = useState({ 
@@ -304,134 +306,170 @@ const Contact = () => {
               </p>
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <input 
-                    type="text" 
-                    placeholder="Full name *" 
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    required
-                    className="w-full rounded-xl px-4 py-3 transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder-gray-400"
-                    style={{
-                      backgroundColor: 'rgba(227, 255, 239, 0.05)',
-                      border: '1px solid rgba(227, 255, 239, 0.2)',
-                      color: '#E3FFEF'
-                    }}
-                  />
-                  <input 
-                    type="email" 
-                    placeholder="Email *" 
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full rounded-xl px-4 py-3 transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder-gray-400"
-                    style={{
-                      backgroundColor: 'rgba(227, 255, 239, 0.05)',
-                      border: '1px solid rgba(227, 255, 239, 0.2)',
-                      color: '#E3FFEF'
-                    }}
-                  />
+                  <div>
+                    <AccessibleLabel htmlFor="fullName" required className="text-white">
+                      Full Name
+                    </AccessibleLabel>
+                    <AccessibleInput
+                      id="fullName"
+                      name="fullName"
+                      type="text"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      required
+                      autoComplete="name"
+                      className="w-full rounded-xl px-4 py-3 placeholder-gray-400"
+                      style={{
+                        backgroundColor: 'rgba(227, 255, 239, 0.05)',
+                        border: '1px solid rgba(227, 255, 239, 0.2)',
+                        color: '#E3FFEF'
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <AccessibleLabel htmlFor="email" required className="text-white">
+                      Email Address
+                    </AccessibleLabel>
+                    <AccessibleInput
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      autoComplete="email"
+                      className="w-full rounded-xl px-4 py-3 placeholder-gray-400"
+                      style={{
+                        backgroundColor: 'rgba(227, 255, 239, 0.05)',
+                        border: '1px solid rgba(227, 255, 239, 0.2)',
+                        color: '#E3FFEF'
+                      }}
+                    />
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <input 
-                    type="tel" 
-                    placeholder="Phone number *" 
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                    className="w-full rounded-xl px-4 py-3 transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder-gray-400"
-                    style={{
-                      backgroundColor: 'rgba(227, 255, 239, 0.05)',
-                      border: '1px solid rgba(227, 255, 239, 0.2)',
-                      color: '#E3FFEF'
-                    }}
-                  />
-                  <input 
-                    type="text" 
-                    placeholder="Company *" 
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                    required
-                    className="w-full rounded-xl px-4 py-3 transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder-gray-400"
-                    style={{
-                      backgroundColor: 'rgba(227, 255, 239, 0.05)',
-                      border: '1px solid rgba(227, 255, 239, 0.2)',
-                      color: '#E3FFEF'
-                    }}
-                  />
-                </div>
-                
-                {/* Custom Dropdown Container */}
-                <div className="relative">
-                  <select 
-                    name="serviceInterest"
-                    value={formData.serviceInterest}
-                    onChange={handleChange}
-                    required
-                    className="w-full rounded-xl px-4 py-3 pr-10 transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none cursor-pointer"
-                    style={{
-                      backgroundColor: 'rgba(227, 255, 239, 0.05)',
-                      border: '1px solid rgba(227, 255, 239, 0.2)',
-                      color: formData.serviceInterest ? '#E3FFEF' : '#94D3A2'
-                    }}
-                  >
-                    <option value="" style={{ backgroundColor: '#1a1f1a', color: '#94D3A2' }}>
-                      Select Service Interest *
-                    </option>
-                    <option value="custom-development" style={{ backgroundColor: '#1a1f1a', color: '#E3FFEF' }}>
-                      Custom Software Development
-                    </option>
-                    <option value="ai-solutions" style={{ backgroundColor: '#1a1f1a', color: '#E3FFEF' }}>
-                      AI & Machine Learning
-                    </option>
-                    <option value="cloud-solutions" style={{ backgroundColor: '#1a1f1a', color: '#E3FFEF' }}>
-                      Cloud Solutions
-                    </option>
-                    <option value="digital-transformation" style={{ backgroundColor: '#1a1f1a', color: '#E3FFEF' }}>
-                      Digital Transformation
-                    </option>
-                    <option value="other" style={{ backgroundColor: '#1a1f1a', color: '#E3FFEF' }}>
-                      Other
-                    </option>
-                  </select>
-                  {/* Custom dropdown arrow */}
-                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                    <svg className="h-5 w-5" style={{ color: '#94D3A2' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
+                  <div>
+                    <AccessibleLabel htmlFor="phone" required className="text-white">
+                      Phone Number
+                    </AccessibleLabel>
+                    <AccessibleInput
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      required
+                      autoComplete="tel"
+                      className="w-full rounded-xl px-4 py-3 placeholder-gray-400"
+                      style={{
+                        backgroundColor: 'rgba(227, 255, 239, 0.05)',
+                        border: '1px solid rgba(227, 255, 239, 0.2)',
+                        color: '#E3FFEF'
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <AccessibleLabel htmlFor="company" required className="text-white">
+                      Company
+                    </AccessibleLabel>
+                    <AccessibleInput
+                      id="company"
+                      name="company"
+                      type="text"
+                      value={formData.company}
+                      onChange={handleChange}
+                      required
+                      autoComplete="organization"
+                      className="w-full rounded-xl px-4 py-3 placeholder-gray-400"
+                      style={{
+                        backgroundColor: 'rgba(227, 255, 239, 0.05)',
+                        border: '1px solid rgba(227, 255, 239, 0.2)',
+                        color: '#E3FFEF'
+                      }}
+                    />
                   </div>
                 </div>
                 
-                <textarea 
-                  placeholder="Tell us about your project *" 
-                  rows={4} 
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  className="w-full rounded-xl px-4 py-3 resize-none transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder-gray-400"
-                  style={{
-                    backgroundColor: 'rgba(227, 255, 239, 0.05)',
-                    border: '1px solid rgba(227, 255, 239, 0.2)',
-                    color: '#E3FFEF'
-                  }}
-                />
+                <div>
+                  <AccessibleLabel htmlFor="serviceInterest" required className="text-white">
+                    Service Interest
+                  </AccessibleLabel>
+                  <div className="relative">
+                    <AccessibleSelect
+                      id="serviceInterest"
+                      name="serviceInterest"
+                      value={formData.serviceInterest}
+                      onChange={handleChange}
+                      required
+                      className="w-full rounded-xl px-4 py-3 pr-10 appearance-none cursor-pointer"
+                      style={{
+                        backgroundColor: 'rgba(227, 255, 239, 0.05)',
+                        border: '1px solid rgba(227, 255, 239, 0.2)',
+                        color: formData.serviceInterest ? '#E3FFEF' : '#94D3A2'
+                      }}
+                    >
+                      <option value="" style={{ backgroundColor: '#1a1f1a', color: '#94D3A2' }}>
+                        Select Service Interest
+                      </option>
+                      <option value="custom-development" style={{ backgroundColor: '#1a1f1a', color: '#E3FFEF' }}>
+                        Custom Software Development
+                      </option>
+                      <option value="ai-solutions" style={{ backgroundColor: '#1a1f1a', color: '#E3FFEF' }}>
+                        AI & Machine Learning
+                      </option>
+                      <option value="cloud-solutions" style={{ backgroundColor: '#1a1f1a', color: '#E3FFEF' }}>
+                        Cloud Solutions
+                      </option>
+                      <option value="digital-transformation" style={{ backgroundColor: '#1a1f1a', color: '#E3FFEF' }}>
+                        Digital Transformation
+                      </option>
+                      <option value="other" style={{ backgroundColor: '#1a1f1a', color: '#E3FFEF' }}>
+                        Other
+                      </option>
+                    </AccessibleSelect>
+                    {/* Custom dropdown arrow */}
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                      <svg className="h-5 w-5" style={{ color: '#94D3A2' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <AccessibleLabel htmlFor="message" required className="text-white">
+                    Project Details
+                  </AccessibleLabel>
+                  <AccessibleTextarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={4}
+                    placeholder="Tell us about your project"
+                    className="w-full rounded-xl px-4 py-3 resize-none placeholder-gray-400"
+                    style={{
+                      backgroundColor: 'rgba(227, 255, 239, 0.05)',
+                      border: '1px solid rgba(227, 255, 239, 0.2)',
+                      color: '#E3FFEF'
+                    }}
+                  />
+                </div>
+                
                 <div className="flex items-start gap-3">
-                  <input 
-                    type="checkbox" 
+                  <AccessibleCheckbox
+                    id="newsletter"
                     name="newsletter"
                     checked={formData.newsletter}
                     onChange={handleChange}
                     className="mt-1 w-4 h-4 rounded border-gray-600 text-emerald-600 focus:ring-emerald-500 focus:ring-offset-0"
                     style={{ backgroundColor: 'rgba(227, 255, 239, 0.05)' }}
                   />
-                  <label className="text-sm leading-relaxed" style={{ color: '#94D3A2' }}>
+                  <AccessibleLabel htmlFor="newsletter" className="text-sm leading-relaxed" style={{ color: '#94D3A2' }}>
                     I agree to receive communications from ID Code and understand that I can unsubscribe at any time. 
                     View our <a href="/privacy" className="underline hover:opacity-80" style={{ color: '#7DD3C0' }}>Privacy Policy</a>.
-                  </label>
+                  </AccessibleLabel>
                 </div>
                 
                 {submitError && (

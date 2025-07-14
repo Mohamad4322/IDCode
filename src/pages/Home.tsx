@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, Play, CheckCircle, Star, Users, Award, Globe, Zap, Code, Smartphone, Cloud, Database, Shield, Lightbulb, Sparkles, ChevronLeft, ChevronRight, ChevronDown, Activity, DollarSign, ShoppingCart, Factory, GraduationCap, Building2, Truck, Plane, Stethoscope, Briefcase, Brain, MessageSquare, Car, Film, Wheat, Building } from 'lucide-react';
+import { ArrowRight, Play, CheckCircle, Star, Users, Award, Globe, Zap, Code, Smartphone, Cloud, Database, Shield, Lightbulb, Sparkles, ChevronLeft, ChevronRight, ChevronDown, Activity, DollarSign, ShoppingCart, Factory, GraduationCap, Building2, Truck, Plane, Stethoscope, Briefcase, Brain, MessageSquare, Car, Film, Wheat, Building, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, PanInfo } from 'framer-motion';
 import StaticNetworkBackground from '../components/StaticNetworkBackground';
@@ -15,6 +15,7 @@ import { CardSlider } from '../components/AnimatedSlider';
 import GradientText from '../components/GradientText';
 import LazyImage from '../components/LazyImage';
 import LazyVideo from '../components/LazyVideo';
+import AccessibleButton from '../components/AccessibleButton';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
@@ -314,42 +315,42 @@ const Home = () => {
         </p>
       </div>
       <div className="flex gap-4">
-        <button
-          aria-label="Previous"
-          className="prev-btn w-10 h-10 border rounded-full flex items-center justify-center transition-all"
+        <AccessibleButton
+          ariaLabel="Previous slide"
+          className="prev-btn touch-target w-12 h-12 border rounded-full flex items-center justify-center transition-all"
           style={{ 
             borderColor: 'rgba(227, 255, 239, 0.3)',
             backgroundColor: 'transparent'
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = 'rgba(227, 255, 239, 0.1)';
-            e.currentTarget.style.borderColor = 'rgba(227, 255, 239, 0.5)';
+            (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'rgba(227, 255, 239, 0.1)';
+            (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(227, 255, 239, 0.5)';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = 'transparent';
-            e.currentTarget.style.borderColor = 'rgba(227, 255, 239, 0.3)';
+            (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'transparent';
+            (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(227, 255, 239, 0.3)';
           }}
         >
           <ChevronLeft className="w-5 h-5" style={{ color: '#E3FFEF' }} />
-        </button>
-        <button
-          aria-label="Next"
-          className="next-btn w-10 h-10 border rounded-full flex items-center justify-center transition-all"
+        </AccessibleButton>
+        <AccessibleButton
+          ariaLabel="Next slide"
+          className="next-btn touch-target w-12 h-12 border rounded-full flex items-center justify-center transition-all"
           style={{ 
             borderColor: 'rgba(227, 255, 239, 0.3)',
             backgroundColor: 'transparent'
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = 'rgba(227, 255, 239, 0.1)';
-            e.currentTarget.style.borderColor = 'rgba(227, 255, 239, 0.5)';
+            (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'rgba(227, 255, 239, 0.1)';
+            (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(227, 255, 239, 0.5)';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = 'transparent';
-            e.currentTarget.style.borderColor = 'rgba(227, 255, 239, 0.3)';
+            (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'transparent';
+            (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(227, 255, 239, 0.3)';
           }}
         >
           <ChevronRight className="w-5 h-5" style={{ color: '#E3FFEF' }} />
-        </button>
+        </AccessibleButton>
       </div>
     </div>
     {/* CAROUSEL */}
@@ -447,60 +448,147 @@ const Home = () => {
       <IndustriesContactSection />
       <ArticlesCarouselSection />
 
-      {/* Video Showcase Section */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Experience Our Expertise</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              See how we transform ideas into powerful digital solutions that drive business growth.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="rounded-xl overflow-hidden shadow-xl">
-              <LazyVideo
-                src="/cta-video-big.webm"
-                className="w-full h-full"
-                autoPlay={true}
-                loop={true}
-                muted={true}
-                playsInline={true}
-              />
-            </div>
-            
-            <div className="bg-white p-8 rounded-xl shadow-lg">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Why Choose ID Code?</h3>
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
-                    <Star className="h-5 w-5 text-emerald-600" />
+      {/* Experience Our Expertise Section */}
+      <section className="relative overflow-hidden pt-24 pb-0 min-h-screen" style={{ backgroundColor: '#E8F5E9' }}>
+        {/* Wave Background */}
+        <div className="absolute inset-0">
+          <img 
+            src="/wave.webp"
+            alt=""
+            className="w-full h-full object-cover"
+            style={{ 
+              opacity: 0.3,
+              transform: 'scale(1.1)'
+            }}
+          />
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+          <div className="w-full lg:w-2/3 space-y-8">
+            {/* Section Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-left"
+            >
+              <h2 className="text-5xl lg:text-6xl font-bold mb-6" style={{ color: '#01051B' }}>
+                Experience Our
+                <span className="block bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                  Expertise
+                </span>
+              </h2>
+              <p className="text-xl max-w-2xl leading-relaxed" style={{ color: 'rgba(1, 5, 27, 0.8)' }}>
+                See how we transform ideas into powerful digital solutions that drive business growth 
+                across three strategic locations worldwide.
+              </p>
+            </motion.div>
+
+            {/* Why Choose ID Code Glass Card */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="backdrop-blur-lg bg-white bg-opacity-20 rounded-2xl p-8 border border-white border-opacity-30 shadow-2xl hover:bg-opacity-25 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-3xl"
+              style={{
+                backdropFilter: 'blur(20px)',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.2)'
+              }}
+            >
+              <h3 className="text-3xl font-bold mb-6" style={{ color: '#01051B' }}>Why Choose ID Code?</h3>
+              <div className="space-y-6">
+                <div className="flex items-start group">
+                  <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-green-500 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Star className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Proven Expertise</h4>
-                    <p className="text-sm text-gray-600">Over 200+ successful projects delivered across industries</p>
+                    <h4 className="font-bold mb-2 text-lg" style={{ color: '#01051B' }}>Proven Expertise</h4>
+                    <p style={{ color: 'rgba(1, 5, 27, 0.8)' }}>Over 200+ successful projects delivered across industries</p>
                   </div>
                 </div>
-                <div className="flex items-start">
-                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
-                    <Users className="h-5 w-5 text-blue-600" />
+                <div className="flex items-start group">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Users className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Dedicated Teams</h4>
-                    <p className="text-sm text-gray-600">Skilled developers committed to your project success</p>
+                    <h4 className="font-bold mb-2 text-lg" style={{ color: '#01051B' }}>Dedicated Teams</h4>
+                    <p style={{ color: 'rgba(1, 5, 27, 0.8)' }}>Skilled developers committed to your project success</p>
                   </div>
                 </div>
-                <div className="flex items-start">
-                  <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
-                    <Zap className="h-5 w-5 text-purple-600" />
+                <div className="flex items-start group">
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Zap className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Innovative Solutions</h4>
-                    <p className="text-sm text-gray-600">Cutting-edge technologies tailored to your business needs</p>
+                    <h4 className="font-bold mb-2 text-lg" style={{ color: '#01051B' }}>Innovative Solutions</h4>
+                    <p style={{ color: 'rgba(1, 5, 27, 0.8)' }}>Cutting-edge technologies tailored to your business needs</p>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
+
+            {/* Office Locations */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="space-y-6"
+            >
+              <h3 className="text-3xl font-bold" style={{ color: '#01051B' }}>Our Global Presence</h3>
+              <div className="grid md:grid-cols-3 gap-6">
+                {/* Damascus, Syria */}
+                <div className="backdrop-blur-lg bg-white bg-opacity-20 rounded-xl p-6 border border-white border-opacity-30 shadow-xl hover:bg-opacity-25 transition-all duration-300 hover:transform hover:-translate-y-1 group">
+                  <div className="flex items-center mb-4">
+                    <div className="w-10 h-10 bg-gradient-to-br from-red-400 to-red-600 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                      <MapPin className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg" style={{ color: '#01051B' }}>Damascus</h4>
+                      <p className="text-sm" style={{ color: 'rgba(1, 5, 27, 0.7)' }}>Syria</p>
+                    </div>
+                  </div>
+                  <p className="text-sm" style={{ color: 'rgba(1, 5, 27, 0.8)' }}>
+                    Our development hub in the heart of the Middle East
+                  </p>
+                </div>
+
+                {/* Edison, NJ */}
+                <div className="backdrop-blur-lg bg-white bg-opacity-20 rounded-xl p-6 border border-white border-opacity-30 shadow-xl hover:bg-opacity-25 transition-all duration-300 hover:transform hover:-translate-y-1 group">
+                  <div className="flex items-center mb-4">
+                    <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                      <Building2 className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg" style={{ color: '#01051B' }}>Edison</h4>
+                      <p className="text-sm" style={{ color: 'rgba(1, 5, 27, 0.7)' }}>New Jersey, USA</p>
+                    </div>
+                  </div>
+                  <p className="text-sm" style={{ color: 'rgba(1, 5, 27, 0.8)' }}>
+                    Our headquarters and main operations center
+                  </p>
+                </div>
+
+                {/* Dubai, UAE */}
+                <div className="backdrop-blur-lg bg-white bg-opacity-20 rounded-xl p-6 border border-white border-opacity-30 shadow-xl hover:bg-opacity-25 transition-all duration-300 hover:transform hover:-translate-y-1 group">
+                  <div className="flex items-center mb-4">
+                    <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-600 rounded-lg flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                      <Globe className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg" style={{ color: '#01051B' }}>Dubai</h4>
+                      <p className="text-sm" style={{ color: 'rgba(1, 5, 27, 0.7)' }}>United Arab Emirates</p>
+                    </div>
+                  </div>
+                  <p className="text-sm" style={{ color: 'rgba(1, 5, 27, 0.8)' }}>
+                    Our strategic gateway to the Gulf region
+                  </p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>

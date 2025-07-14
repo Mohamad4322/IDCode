@@ -8,7 +8,7 @@ const ArticlesCarouselSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Map blog posts to articles with appropriate icons and styling
   const getIconForCategory = (category: string) => {
@@ -103,52 +103,53 @@ const ArticlesCarouselSection = () => {
   return (
     <section
       id="latest-articles"
-      className="relative overflow-hidden"
-      style={{ backgroundColor: '#E8F5E9' }}
+      className="relative"
+      style={{ 
+        backgroundColor: '#e8f5e9'
+      }}
     >
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         {/* HEADER */}
-        <div className="text-center mb-16">
-  <h2 className="text-4xl font-bold mb-2" style={{ color: '#01051B' }}>
-    Latest Insights
-  </h2>
-  <p className="text-lg mb-8" style={{ color: 'rgba(1, 5, 27, 0.7)' }}>
-    Explore our latest articles, case studies, and industry insights to stay ahead in the talent acquisition landscape.
-  </p>
-</div>
+        <div className="text-left mb-16">
+          <h2 className="text-4xl font-bold mb-2" style={{ color: '#01051B' }}>
+            Latest Insights
+          </h2>
+          <p className="text-lg mb-8" style={{ color: 'rgba(1, 5, 27, 0.7)' }}>
+            Explore our latest articles, case studies, and industry insights to stay ahead in the talent acquisition landscape.
+          </p>
+        </div>
 
-{/* Navigation Controls */}
-<div className="flex justify-end mb-6 space-x-2">
-  <button
-    onClick={goToPrevious}
-    disabled={isAtStart}
-    className="w-10 h-10 flex items-center justify-center rounded-full transition-all"
-    style={{
-      backgroundColor: isAtStart ? 'rgba(1, 5, 27, 0.05)' : 'rgba(1, 5, 27, 0.1)',
-      border: '1px solid rgba(1, 5, 27, 0.2)',
-      cursor: isAtStart ? 'not-allowed' : 'pointer'
-    }}
-  >
-    <ChevronLeft className="h-5 w-5" style={{ 
-      color: isAtStart ? 'rgba(1, 5, 27, 0.3)' : '#01051B' 
-    }} />
-  </button>
-  <button
-    onClick={goToNext}
-    disabled={isAtEnd}
-    className="w-10 h-10 flex items-center justify-center rounded-full transition-all"
-    style={{
-      backgroundColor: isAtEnd ? 'rgba(1, 5, 27, 0.05)' : 'rgba(1, 5, 27, 0.1)',
-      border: '1px solid rgba(1, 5, 27, 0.2)',
-      cursor: isAtEnd ? 'not-allowed' : 'pointer'
-    }}
-  >
-    <ChevronRight className="h-5 w-5" style={{ 
-      color: isAtEnd ? 'rgba(1, 5, 27, 0.3)' : '#01051B' 
-    }} />
-  </button>
-</div>
-        
+        {/* Navigation Controls - Moved to left */}
+        <div className="flex justify-start mb-6 space-x-2">
+          <button
+            onClick={goToPrevious}
+            disabled={isAtStart}
+            className="w-10 h-10 flex items-center justify-center rounded-full transition-all"
+            style={{
+              backgroundColor: isAtStart ? 'rgba(1, 5, 27, 0.05)' : 'rgba(1, 5, 27, 0.1)',
+              border: '1px solid rgba(1, 5, 27, 0.2)',
+              cursor: isAtStart ? 'not-allowed' : 'pointer'
+            }}
+          >
+            <ChevronLeft className="h-5 w-5" style={{ 
+              color: isAtStart ? 'rgba(1, 5, 27, 0.3)' : '#01051B' 
+            }} />
+          </button>
+          <button
+            onClick={goToNext}
+            disabled={isAtEnd}
+            className="w-10 h-10 flex items-center justify-center rounded-full transition-all"
+            style={{
+              backgroundColor: isAtEnd ? 'rgba(1, 5, 27, 0.05)' : 'rgba(1, 5, 27, 0.1)',
+              border: '1px solid rgba(1, 5, 27, 0.2)',
+              cursor: isAtEnd ? 'not-allowed' : 'pointer'
+            }}
+          >
+            <ChevronRight className="h-5 w-5" style={{ 
+              color: isAtEnd ? 'rgba(1, 5, 27, 0.3)' : '#01051B' 
+            }} />
+          </button>
+        </div>
 
         {/* CAROUSEL */}
         <div ref={containerRef} className="relative overflow-hidden">
@@ -171,18 +172,17 @@ const ArticlesCarouselSection = () => {
                 style={{ width: `${cardWidth}px` }}
               >
                 <div
-                  className="rounded-2xl p-8 shadow-lg flex flex-col h-full transition-all duration-300 group relative overflow-hidden"
+                  className="rounded-2xl p-8 flex flex-col h-full transition-all duration-300 group relative overflow-hidden"
                   style={{ 
                     background: `linear-gradient(135deg, #ffffff 0%, #ffffff 50%, ${article.bgColor} 100%)`,
-                    border: '1px solid rgba(1, 5, 27, 0.08)',
-                    minHeight: '400px'
+                    border: 'none',
+                    minHeight: '400px',
+                    boxShadow: 'none'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(1, 5, 27, 0.12)';
                     e.currentTarget.style.transform = 'translateY(-4px)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(1, 5, 27, 0.08)';
                     e.currentTarget.style.transform = 'translateY(0)';
                   }}
                 >
@@ -232,14 +232,15 @@ const ArticlesCarouselSection = () => {
           </div>
         )}
 
-        {/* View All Articles CTA */}
-        <div className="text-center mt-12">
+        {/* View All Articles CTA - Aligned to left */}
+        <div className="text-left mt-12">
           <Link
             to="/blog"
-            className="inline-flex items-center px-8 py-4 rounded-xl font-medium transition-all shadow-md"
+            className="inline-flex items-center px-8 py-4 rounded-xl font-medium transition-all"
             style={{ 
               backgroundColor: '#10b981',
-              color: '#FFFFFF'
+              color: '#FFFFFF',
+              boxShadow: 'none'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = '#0d9668';

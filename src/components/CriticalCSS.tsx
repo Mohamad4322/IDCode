@@ -40,9 +40,9 @@ const CriticalCSS: React.FC = () => {
           height: auto;
         }
         
-        /* Critical button styles */
+        /* Critical button styles with improved contrast */
         .btn-n--emerald {
-          background: linear-gradient(to right, #059669, #0d9488);
+          background: linear-gradient(to right, #047857, #0f766e);
           color: white;
           border-radius: 9999px;
           transition: all 0.3s;
@@ -51,7 +51,36 @@ const CriticalCSS: React.FC = () => {
         }
         
         .btn-n--emerald:hover {
+          background: linear-gradient(to right, #065f46, #134e4a);
           box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Improved touch targets */
+        .touch-target {
+          min-width: 44px;
+          min-height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        
+        /* Better focus indicators */
+        .focus-visible {
+          outline: 2px solid #10b981;
+          outline-offset: 2px;
+        }
+        
+        /* Improved contrast for text elements */
+        .text-contrast-high {
+          color: #1f2937;
+        }
+        
+        .text-contrast-medium {
+          color: #374151;
+        }
+        
+        .text-contrast-low {
+          color: #6b7280;
         }
         
         /* Prevent flash of unstyled content */
